@@ -157,7 +157,7 @@ document.addEventListener('keydown', a => { //oyuncu hareketi
         break;
     }
 
-    directions.push(dir);
+    if(dir != undefined) directions.push(dir);
     
     npc.targetIndex = path.length - 1;
 
@@ -177,10 +177,13 @@ document.addEventListener('keydown', a => { //oyuncu hareketi
         npc.canmove = true;
         player.canmove = false;
 
+        player.tileX = 0;
+        player.tileY = 0;
+
         (async () => { //updateNPC async oldugu icin onun Promise nesnesi degil boolean deger gondermesini bekler
           
           runnable = (await updateNPC()); //NPC rotayi sorunsuz tamamlarsa true, takili kalirsa false
-          console.log("returned:", runnable);
+          if(!runnable)alert("Nox takılı kaldı! Tekrar dene.");
         })();      
       }
     }
@@ -383,41 +386,57 @@ ittirebilmesi ya da kristali aydınlatarak ortadan kaldırabilmesi için uygun a
     return;
   }
 
-  if(!runnable){ // oyun cikmaza girmisse seviyeyi resetler
-    console.log("not runnable");
+  if(!runnable){ // oyun cikmaza girmisse ayni seviyeyi resetler
 
+    player.tileX = 0;
+      player.tileY = 0;
+      player.canmove = true;
+      
+      npc.tileX = 5;
+      npc.tileY = 5;
+      npc.targetIndex = 0;
+      npc.canmove = false;
+    
     switch(level){
+
       case 1:
-        player.tileX = 0;
-        player.tileY = 0;
-        player.canmove = true;
-
-        npc.tileX = 5;
-        npc.tileY = 5;
-        npc.targetIndex = 0;
-        npc.canmove = false;
-
         entities =[
-          {tileX: 2, tileY: 3, type: 1}
+          {tileX: 2, tileY: 3, type: 1} //heykel konumu
         ];
         break;
       
       case 2:
-        player.tileX = 0;
-        player.tileY = 0;
-        player.canmove = true;
-
-        npc.tileX = 5;
-        npc.tileY = 5;
-        npc.targetIndex = 0;
-
         entities = [
-          {tileX: 2,tileY: 4, type: 2, down: false},
-          {tileX: 5, tileY:3, type: 3, pressed: false}
+          {tileX: 2,tileY: 4, type: 2, down: false}, //sarmasik konumu
+          {tileX: 5, tileY:3, type: 3, pressed: false} // kristal konumu
         ];
 
         voidTiles.length = 0;
         voidTiles = [2,3,4,5,8,9,10,11,14,15,16,17,18,20,24,30,31];
+        break;
+      
+      case 3:
+        entities = [
+          {tileX: 5,tileY: 3, type: 1}, // heykel konumu
+          {tileX: 1, tileY:2, type: 2, down: false}, //sarmasik konumu
+          {tileX: 3, tileY: 0, type: 3, pressed: false} // kristal konumu
+        ];
+
+        voidTiles.length = 0;
+        voidTiles = [1,2,4,5,7,8,10,16,18,19,24,25,26,28,30,31,32,34];
+        break;
+      
+      case 4:
+        entities = [
+          {tileX: 4, tileY: 3, type: 1}, //heykel konumu 
+          {tileX: 2, tileY:1, type: 2, down: false}, //sarmasik konumu
+          {tileX: 2, tileY: 5, type: 3, pressed: false} // kristal konumu
+        ];
+        
+        
+        voidTiles.length = 0; 
+        voidTiles.push(...[3,4,5,11,12,13,14,15,17,25,26,27,29]); //yurunemez bloklar hazir veriseti
+        break;
     }
     path = []; //rota sifirlanir
     directions = []; //hareket yonları sifirlanir
@@ -430,9 +449,7 @@ ittirebilmesi ya da kristali aydınlatarak ortadan kaldırabilmesi için uygun a
 
 
   if(lastLevel!= level){ // eger guncel seviye kurulumu yapilmamissa calisarak seviye haritasini hazirlar
-  switch(level){
-          
-    case 2:
+  
       player.tileX = 0;
       player.tileY = 0;
       player.canmove = true;
@@ -441,34 +458,90 @@ ittirebilmesi ya da kristali aydınlatarak ortadan kaldırabilmesi için uygun a
       npc.tileY = 5;
       npc.targetIndex = 0;
 
-      entities = [
-        {tileX: 2,tileY: 4, type: 2, down: false},
-        {tileX: 5, tileY:3, type: 3, pressed: false}
-      ];
-      
-      mapTileSet = [];
-      path = [];
+      mapTileSet = []; //harita veri seti yenilenmek uzere sifirlanir
+
+      path = []; // rota ve yon veri setleri yeni seviye icin bosaltilir
       directions = [];
+  
+    switch(level){
+          
+      case 2:
+        
+        entities = [
+          {tileX: 2,tileY: 4, type: 2, down: false},
+          {tileX: 5, tileY:3, type: 3, pressed: false}
+        ];
+       
+        path.push({tileX: player.tileX, tileY: player.tileY});
+
+        voidTiles.length = 0;
+        voidTiles.push(...[2,3,4,5,8,9,10,11,14,15,16,17,18,20,21,22,24,27,30,31]);
+
+        customMap(voidTiles);
+        break;
+
+      case 3:
+
+        entities = [
+          {tileX: 5,tileY: 3, type: 1},
+          {tileX: 1, tileY:2, type: 2, down: false},
+          {tileX: 3, tileY: 0, type: 3, pressed: false}
+        ];
+        
+        path.push({tileX: player.tileX, tileY: player.tileY}); //ilk oyuncu konumu rotaya kaydedilir
+        
+        voidTiles.length = 0;
+        voidTiles.push(...[1,2,4,5,7,8,10,16,18,19,24,25,26,27,28,30,31,32,33,34]); //yurunemez bloklar hazir veriseti
+
+        customMap(voidTiles); //yurunmez bloklara gore harita veri seti doldurulur
+        break;
       
-      path.push({tileX: player.tileX, tileY: player.tileY});
+      case 4:
+        entities = [
+          {tileX: 4, tileY: 3, type: 1}, //heykel konumu 
+          {tileX: 2, tileY:1, type: 2, down: false}, //sarmasik konumu
+          {tileX: 2, tileY: 5, type: 3, pressed: false} // kristal konumu
+        ];
+        
+       
+        path.push({tileX: player.tileX, tileY: player.tileY}); //ilk oyuncu konumu rotaya kaydedilir
+        
+        voidTiles.length = 0; 
+        voidTiles.push(...[3,4,5,11,12,13,14,15,17,25,26,27,29]); //yurunemez bloklar hazir veriseti
 
-      voidTiles.length = 0;
-      voidTiles.push(...[2,3,4,5,8,9,10,11,14,15,16,17,18,20,21,22,24,27,30,31]);
+        customMap(voidTiles); //yurunmez bloklara gore harita veri seti doldurulur
+        break;
 
-      customMap(voidTiles);
-      break;
     }
 
     lastLevel = level;
   }
-  c.drawImage(bgImg,0,0,canvas.width, canvas.height);
-  
-  drawMap();
-  drawEntity(entities);
-  drawPlayer();
-  drawNPC();
 
-  requestAnimationFrame(gameLoop);
+  if(level != 5){
+
+  
+    c.drawImage(bgImg,0,0,canvas.width, canvas.height);
+    
+    drawMap();
+    drawEntity(entities);
+    drawPlayer();
+    drawNPC();
+
+    requestAnimationFrame(gameLoop);
+}else{
+  c.drawImage(bgImg,0,0,canvas.width, canvas.height);
+  c.fillStyle = 'rgba(0,0,0,0.6)';
+  c.fillRect(0,0, canvas.width, canvas.height);
+
+  c.fillStyle = "white";
+  c.font = "30px Arial";
+  c.textAlign = "center";
+  c.strokeStyle = 'rgb(189, 155, 229)';
+  c.lineWidth = 3;
+  c.strokeText("Tebrikler, oyunu bitirdiniz!",canvas.width / 2, TILE_LEN * 3);
+  c.fillText("Tebrikler, oyunu bitirdiniz!", canvas.width / 2, TILE_LEN * 3);
+
+}
 }
 
 gameLoop();
