@@ -11,9 +11,12 @@ Başlama ekranında oyun amacı açıklanır, mekanikler ve kontroller kısaca a
 - Oyunda heykel ve sarmaşık olmak üzere iki engel tipi vardır. Dux engellerin hiçbirine takılmadan geçebilir. Nox ise heykelleri ittirebilirken, sarmaşıkları geçmek için önce kristalin üzerine basarak onu aydınlatmak zorundadır.
 - Dux, Nox'a ulaştığı zaman Nox kaydedilen adım haritasını sondan takip eder. Eğer tüm adım haritasını tamamlayabilirse seviye geçilir.
 
+[Örnek oynanış videosunu izlemek için tıklayın](https://youtu.be/4b_AMxK3pw4)
+
 ![Oyun ekranı](images/oyun-ekrani.png)
 
 [DUX-NOX oynamak için tıklayın](https://ecemino.github.io/my-game/)
+---
 
 [Orijinal Oyun Sayfası](https://elvinlc.itch.io/dux-nox)
 
