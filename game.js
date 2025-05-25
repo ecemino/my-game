@@ -39,9 +39,9 @@ var entity3_unlit_img = new Image();
 var entity3_lit_img = new Image();
 
 playerImg.src = "images/player.png";
-npcImg.src = "images/npc-to-scale.png";
+npcImg.src = "images/npc.png";
 grassImg.src = "images/grass.png";
-bgImg.src = "images/bg_sky.png";
+bgImg.src = "images/bg.png";
 entity1_img.src = "images/entity1.png";
 entity2_up_img.src = "images/entity2_up.png";
 entity2_down_img.src = "images/entity2_down.png";
@@ -352,10 +352,11 @@ async function gameLoop(){
     const text = `Siyah kedi Nox göremiyor ve beyaz kedi Dux'a ulaşmak istiyor!
 Nox'un atacağı adımları göstermesi için Dux'a yardım et!
 
+— WASD veya yön tuşlarıyla Dux'ı kontrol et.
 — Dux ile attığın adımlar Nox tarafından sondan başlayarak tekrar edilir.
 — Dux her engelin üzerinden adımlayabilir fakat Nox bunu yapamaz, bu engelleri
-ittirebilmesi ya da kristali aydınlatarak ortadan kaldırabilmesi için uygun adımları çizmelisin.
-— Nox haritadaki kristalin üstüne gelerek kristali aydınlatabilir.
+ittirebilmesi ya da kristali aydınlatarak ortadan kaldırabilmesi için uygun adım haritasını çizmelisin.
+— Nox haritadaki kristalin üstüne basarak kristali aydınlatabilir.
     — Kristal aydınlandığında sarmaşıklar geri çekilir ve Nox'un geçmesine izin verir.
 — Nox yeşil heykelleri harita içinde ittirebilir.`;
 
