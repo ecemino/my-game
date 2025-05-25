@@ -4,7 +4,7 @@ DUX-NOX HTML5, Canvas ve Javascript kullanılarak geliştirilmiş uyarlama bir p
 Başlama ekranında oyun amacı açıklanır, mekanikler ve kontroller kısaca anlatılır. Başlamak için Enter'a basılır.
 
 ![Başlama Ekranı](images/baslatma-ekrani.png)
-----
+
 ## Oynanış
 - Oyun içindeki beyaz renkli karakter (Dux) oyuncuya aittir. Oyuncu WASD veya yön tuşlarıyla karakterini kontrol eder.
 - Dux'ın seviye boyunca attığı adımlar kaydedilir. Dux, haritanın altındaki siyah renkli Nox karakterine ulaştığı zaman hareketi engellenir.
@@ -13,11 +13,12 @@ Başlama ekranında oyun amacı açıklanır, mekanikler ve kontroller kısaca a
 
 ![Oyun ekranı](images/oyun-ekrani.png)
 
-[DUX-NOX oyna](https://ecemino.github.io/my-game/)
+[DUX-NOX oynamak için tıklayın](https://ecemino.github.io/my-game/)
 
 [Orijinal Oyun Sayfası](https://elvinlc.itch.io/dux-nox)
----
+
 ### Asset Kaynakça Siteleri
+
 [Arka Plan Müziği: First Steps - Lena Raine](https://archive.org/download/official-celeste-original-soundtrack-06-checking-in)
 
 [Adım Atma Sesi](https://soundeffectgenerator.org/en/sound-effects/hop-sound-effect)
